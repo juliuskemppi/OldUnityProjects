@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+
+// 2024 I'm pretty sure I had no idea what i was doing.
 /// <summary>
 /// The Enemy AI used in the fight scene
 /// </summary>
@@ -19,7 +21,7 @@ public class EnemyFightAI : Fighter
 
     public bool attack;
 
-    List<Action> Actions = new List<Action>();
+    List<Action> Actions = new List<Action>(); //2024 this isnt used anywhere should be removed
 
     public InventorySlot ItemSlot;
 
@@ -44,7 +46,7 @@ public class EnemyFightAI : Fighter
     /// </summary>
     /// <param name="priority"></param>
     /// <returns></returns>
-    Action GetPriorityAction(int priority)
+    Action GetPriorityAction(int priority) //2024 I have no idea what this function is supposed to work, it isn't even used. why wasn't this removed
     {
         return Attack;
         //If the priority is the lowest

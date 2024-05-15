@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+/// 2024: Half of this file is pointless comments. I also should have separated the armor and equipment to their own file
+/// Slot based inventory system where every slot can hold a certain amount of one item.
+/// Saved as a string [itemID1:amount|itemID2:amount]
+
+
 /// <summary>
 /// Structure that holds the display information of a piece of armor
 /// </summary>
@@ -608,21 +613,21 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                //The amount that can be added to the inventory
+                //The amount that can be added to the inventory. | 2024 No it isn't, its how many items don't fit in the slot. (GetMaxStack() - GetAmount()) would be correct
                 int newAmount = totalAmount - InventorySlots[slot].GetMaxStack();
 
                 //Add the new amount
-                InventorySlots[slot].AddItems(newAmount);
+                InventorySlots[slot].AddItems(newAmount);       //2024 Should be something like InventorySlots[slot].Fill() or count the actual number.
 
                 //Can more slots be added
                 if (CanAddSlots())
                 {
                     //Create a new slot
-                    CreateInventorySlot(item, amount - newAmount);
+                    CreateInventorySlot(item, amount - newAmount);      //2024 Should be just newAmount
                 }
                 else
                 {
-                    throw new Exception("Max amount of inventory slots reached");
+                    throw new Exception("Max amount of inventory slots reached");   //2024 this is a prety obvious edge case that can easily happen during gameplay, and should be handled properly.
                 }
             }
         }
@@ -635,7 +640,7 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                throw new Exception("Max amount of inventory slots reached");
+                throw new Exception("Max amount of inventory slots reached"); //2024 this too should be handled properly 
             }
         }
         if(InventoryGUI.instance != null)
@@ -714,7 +719,7 @@ public class Inventory : MonoBehaviour
     /// Remove an item from the inventory using a gameobject
     /// </summary>
     /// <param name="item">Gameobject to remove from the inventory</param>
-    public void RemoveFromInventory(Item item)
+    public void RemoveFromInventory(Item item)      //2024 There are 4 versions of this same method and I don't know why.
     {
         try
         {
@@ -1146,7 +1151,7 @@ public class Inventory : MonoBehaviour
         List<InventorySlot> newInventory = new List<InventorySlot>(); 
 
         //The last character that was processed
-        char LastChar = 'I';
+        char LastChar = 'I';    //2024 why isn't this just ''
 
         //The Slot to be added
         InventorySlot LastSlot = new InventorySlot();
@@ -1155,7 +1160,7 @@ public class Inventory : MonoBehaviour
         Item I = null; 
 
         //Go through the data
-        for (int i = 0; i < Data.Length; i++)
+        for (int i = 0; i < Data.Length; i++)   //2024 this loop bad there is a better way in this file, in SetEquippedWeapons(data)
         {
             //The loop has reached the end of the Inventory
             if(Data[i] == ']')
@@ -1169,7 +1174,7 @@ public class Inventory : MonoBehaviour
                 int id = -1;
 
                 //Find the end point of the id
-                for (int a = i; a < Data.Length; a++)
+                for (int a = i; a < Data.Length; a++)   //This is totally pointless
                 {
                     //The end point
                     if (Data[a] == ':')
@@ -1193,7 +1198,7 @@ public class Inventory : MonoBehaviour
                 int am = 1;
 
                 //Find the end of the amount
-                for (int c = i; c < Data.Length; c++)
+                for (int c = i; c < Data.Length; c++)   //This is totally pointless
                 {
                     //The end of the amount
                     if (Data[c] == '|' || Data[c] == ']')
@@ -1221,6 +1226,9 @@ public class Inventory : MonoBehaviour
     }
 
     #region FilterFuctions
+
+    ///2024 We didn't have enough time to actually implement any of these.
+
     /// <summary>
     /// Get a list of Inventory slots filtered by a category
     /// </summary>
@@ -1253,7 +1261,7 @@ public class Inventory : MonoBehaviour
     /// <param name="category1">The first category</param>
     /// <param name="category2">The second category</param>
     /// <returns></returns>
-    public List<InventorySlot> GetFilteredList(Category category1, Category category2)
+    public List<InventorySlot> GetFilteredList(Category category1, Category category2)  // 2024 maybe should just use an array of categories
     {
         //Create an empty list
         List<InventorySlot> testList = new List<InventorySlot>();
@@ -1447,7 +1455,7 @@ public class Inventory : MonoBehaviour
         }
 
         //Wait for end of frame
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame(); //2024 there's probably a good reason for this
         //The other string
         string thing = "";
 
@@ -1462,7 +1470,7 @@ public class Inventory : MonoBehaviour
         int slotNum = 0;
 
         //Iterate through the chars in the string
-        for (int i = 0; i < Data.Length; i++)
+        for (int i = 0; i < Data.Length; i++) // 2024 this is far better than the inventory builder
         {
             //If the char is a number
             if (Data[i] != '(' && Data[i] != '|' && Data[i] != ')' && Data[i] != ']' && Data[i] != '[')
